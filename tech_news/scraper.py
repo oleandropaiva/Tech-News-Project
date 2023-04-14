@@ -1,5 +1,6 @@
 import time
 import requests
+from parsel import Selector
 
 
 # Requisito 1
@@ -20,7 +21,14 @@ def fetch(url: str):
 
 # Requisito 2
 def scrape_updates(html_content):
-    """Seu código deve vir aqui"""
+    update = Selector(html_content)
+    news_link = update.css("div.cs-overlay a::attr(href)").getall()
+    return news_link
+
+    # response = requests.get('https://blog.betrybe.com/')
+    # selector = Selector(response.text)
+    # print(selector.css("div.cs-overlay a::attr(href)").get())
+    # referencia raspagem de dados/analisando respostas (course)
 
 
 # Requisito 3
