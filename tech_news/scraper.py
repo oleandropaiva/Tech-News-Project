@@ -41,11 +41,28 @@ def scrape_next_page_link(html_content):
 
 # Requisito 4
 def scrape_news(html_content):
-    """Seu código deve vir aqui"""
+    news = Selector(text=html_content)
+    title = news.css("h1::text").get()
+    url = news.css("link[rel=canonical]::attr(href)").get()
+    timestamp = news.css("li.meta-date::text").get()
+    writer = news.css("span.author a::text").get()
+    reading_time = news.css("li.meta-reading-time::text").get()
+    summary = news.css("div.entry-content > p:first-of-type *::text").getall()
+    category = news.css("span.label::text").get()
+
+    result = {
+        "url": url,
+        "title": title.strip(),
+        "timestamp": timestamp,
+        "writer": writer,
+        "reading_time": int(reading_time.split(' ')[0]),
+        "summary": "".join(summary).strip(),
+        "category": category,
+    }
+
+    return result
 
 
 # Requisito 5
 def get_tech_news(amount):
     """Seu código deve vir aqui"""
-    # url_page = "https://blog.betrybe.com/"
-    # news =
